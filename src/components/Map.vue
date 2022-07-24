@@ -9,6 +9,7 @@ export default {
   data() {
     return {
       position: {},
+      cityName: "",
     };
   },
   mounted() {
@@ -25,6 +26,10 @@ export default {
     }
   },
   watch: {
+    cityName(value) {
+      this.$store.commit("openWeatherApi/SET_CITYNAME", value);
+      this.$store.dispatch("openWeatherApi/FETCH_OPENWEATHER_API");
+    },
     position(value) {
       this.$store.commit("openWeatherApi/SET_LATLON", value);
       this.$store.dispatch("openWeatherApi/FETCH_OPENWEATHER_API");
@@ -44,54 +49,67 @@ export default {
         {
           // 서울
           latlng: new kakao.maps.LatLng(36.5683, 126.9778),
+          cityName: "Seoul",
         },
         {
           // 인천
           latlng: new kakao.maps.LatLng(37.40864282648822, 126.65071862847725),
+          cityName: "Incheon",
         },
         {
           // 수원
           latlng: new kakao.maps.LatLng(37.2911, 127.0089),
+          cityName: "Suwon",
         },
         {
           // 대전
           latlng: new kakao.maps.LatLng(36.3519957815787, 127.39131469478555),
+          cityName: "Daejeon",
         },
         {
           // 태백
           latlng: new kakao.maps.LatLng(37.15818414766273, 128.928560966107),
+          cityName: "Taebaek",
         },
         {
           // 강릉
           latlng: new kakao.maps.LatLng(37.791688035246636, 128.82867301427635),
+          cityName: "Gangneung",
         },
         {
           // 대구
           latlng: new kakao.maps.LatLng(35.871148697228875, 128.61345034272617),
+          cityName: "Daegu",
         },
         {
           // 울산
           latlng: new kakao.maps.LatLng(35.5372, 129.3167),
+          cityName: "Ulsan",
         },
         {
           // 부산
           latlng: new kakao.maps.LatLng(35.185997613083536, 129.0662809358643),
+          cityName: "Busan",
         },
         {
           // 전주
           latlng: new kakao.maps.LatLng(35.90493196781132, 127.17357575637105),
+          cityName: "Jeonju",
         },
         {
           // 광주
           latlng: new kakao.maps.LatLng(35.166611792579545, 126.84603104436039),
+          cityName: "Gwangju",
         },
         {
           // 목포
           latlng: new kakao.maps.LatLng(34.823630139082525, 126.39766650967137),
+          cityName: "Mokpo",
         },
         {
           // 제주도
           latlng: new kakao.maps.LatLng(33.5097, 126.5219),
+          cityName: "Jeju",
         },
       ];
 
@@ -106,9 +124,8 @@ export default {
 
         kakao.maps.event.addListener(marker, "click", function () {
           // 클릭한 위도, 경도 정보를 가져옵니다
-          // console.log(this.getPosition());
-          let selectedPosition = this.getPosition();
-          vm.position = selectedPosition;
+          vm.cityName = pos.cityName;
+          vm.position = this.getPosition();
         });
 
         // 아래 코드는 지도 위의 마커를 제거하는 코드입니다

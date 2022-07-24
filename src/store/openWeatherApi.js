@@ -6,10 +6,10 @@ export default {
   // state : 실제로 취급해야하는 데이터
   state: {
     position: {
-      lat: 0,
-      lon: 0,
+      lat: 36.5683,
+      lon: 126.9778,
     },
-    cityName: "",
+    cityName: "Seoul",
     currentWeather: {
       currentTemp: 0,
       currentHumidity: 0,
@@ -20,6 +20,7 @@ export default {
       currentVisibility: 0,
     },
     hourlyWeather: [],
+    imagePath: [],
   },
   // getters: 계산된 상태를 만들어내는 속성이다.
   // computed와 기능이 유사하다.
@@ -28,6 +29,10 @@ export default {
   // 1. mutations : 변이 메서드, 우리가 관리하는 데이터(state)를 변경시켜줄 수 있다.
   // 즉, state 안의 데이터는 오로지 mutations에서만 데이터를 변경시킬 수 있다.
   mutations: {
+    SET_LATLON(state, payload) {
+      state.position.lat = payload.Ma;
+      state.position.lon = payload.La;
+    },
     SET_CITYNAME(state, payload) {
       state.cityName = payload;
     },
@@ -43,13 +48,9 @@ export default {
     SET_TIMELY_WEATHER(state, payload) {
       state.hourlyWeather = payload;
     },
-    SET_LATLON(state, payload) {
-      console.log(state.position.lat); // 초기값
-
-      state.position.lat = payload.Ma;
-      state.position.lon = payload.La;
-
-      console.log(state.position.lat); // 변경된 후
+    SET_IMAGEPATH(state, payload) {
+      state.imagePath = payload;
+      console.log(state.imagePath);
     },
   },
   // 2. actions : 특정한 데이터를 직접적으로 수정하는 것이 허용되지 않는다.
@@ -73,16 +74,13 @@ export default {
     // OPENWEATHER API 데이터 호출
     async FETCH_OPENWEATHER_API(context) {
       // context : 매개변수 전달
-      const API_KEY = "6e9435abd019fcfcc2748f9c457cc209";
-      // let initialLat = 36.5683;
-      // let initialLon = 126.9778;
-      let initialLat = context.state.position.lat ? context.state.position.lat : 36.5683;
-      let initialLon = context.state.position.lon ? context.state.position.lon : 126.9778;
+      const API_KEY = "cfee9ef18d13e21307be6c0ee9c6455e";
+      let initialLat = context.state.position.lat;
+      let initialLon = context.state.position.lon;
 
       try {
         const res = await axios.get(`https://api.openweathermap.org/data/2.5/onecall?lat=${initialLat}&lon=${initialLon}&appid=${API_KEY}&units=metric`);
-        console.log(res);
-        context.commit("SET_CITYNAME", res.data.timezone.split("/")[1]); // 도시이름 데이터
+        // context.commit("SET_CITYNAME", res.data.timezone.split("/")[1]); // 도시이름 데이터
         context.commit("SET_CURRENT_WEATHER", res.data.current); // 조회하는 현재시간에 대한 날씨데이터
         context.commit("SET_TIMELY_WEATHER", res.data.hourly); // 시간대별 날씨데이터
       } catch (error) {
