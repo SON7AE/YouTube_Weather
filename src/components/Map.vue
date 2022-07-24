@@ -7,18 +7,28 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+      position: {},
+    };
   },
   mounted() {
+    const API_KEY = "3aa888462f58f13780e9ee7439a5db03";
+
     if (window.kakao && window.kakao.maps) {
       this.initMap();
     } else {
       const script = document.createElement("script");
       /* global kakao */
       script.onload = () => kakao.maps.load(this.initMap);
-      script.src = "http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=3aa888462f58f13780e9ee7439a5db03";
+      script.src = `http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${API_KEY}`;
       document.head.appendChild(script);
     }
+  },
+  watch: {
+    position(value) {
+      this.$store.commit("openWeatherApi/SET_LATLON", value);
+      this.$store.dispatch("openWeatherApi/FETCH_OPENWEATHER_API");
+    },
   },
   methods: {
     initMap() {
@@ -85,6 +95,7 @@ export default {
         },
       ];
 
+      const vm = this;
       // 마커를 생성합니다.
       positions.forEach(function (pos) {
         var marker = new kakao.maps.Marker({
@@ -92,6 +103,13 @@ export default {
         });
         // 마커가 지도 위에 표시되도록 설정합니다
         marker.setMap(map);
+
+        kakao.maps.event.addListener(marker, "click", function () {
+          // 클릭한 위도, 경도 정보를 가져옵니다
+          // console.log(this.getPosition());
+          let selectedPosition = this.getPosition();
+          vm.position = selectedPosition;
+        });
 
         // 아래 코드는 지도 위의 마커를 제거하는 코드입니다
         // marker.setMap(null);

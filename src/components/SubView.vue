@@ -75,13 +75,12 @@ export default {
     // OpenWeatherAPI 호출 함수
     const fetchOpenWeatherApi = async () => {
       // API 호출을 위한 필수 데이터
-      const API_KEY = "e7878598157a92ae89d1403b94d8653d"; // env
+      const API_KEY = "362cfb1a49fa98d009a2c14a7a1ae5cb"; // env
       let initialLat = 36.5683;
       let initialLon = 126.9778;
 
       try {
         const res = await axios.get(`https://api.openweathermap.org/data/2.5/onecall?lat=${initialLat}&lon=${initialLon}&appid=${API_KEY}&units=metric`);
-        console.log(res);
 
         let isInitialData = res.data.current; // 초기데이터
         let isInitialCityName = res.data.timezone; // 초기 도시이름 데이터
@@ -121,8 +120,6 @@ export default {
         // Composition API에서 AJAX요청과 데이터 변경을 하려면 데이터.value로 접근해야한다.
         cityName.value = isInitialCityName.split("/")[1];
         subWeatherData.value = isProcessedData;
-
-        console.log(isFeelLikeTemp);
       } catch (error) {
         console.log(error);
       }

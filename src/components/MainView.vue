@@ -98,8 +98,7 @@ export default {
 
     // Vuex Store의 Mutations를 실행할 때는 commit() 메서드를
     // Vuex Store의 Actions를 실행할 때는 dispatch() 메서드를 사용한다.
-
-    await this.$store.dispatch("openWeatherApi/FETCH_API");
+    await this.$store.dispatch("openWeatherApi/FETCH_OPENWEATHER_API");
 
     const { currentTemp, currentHumidity, currentWindSpeed, currentFeelsLike } = this.$store.state.openWeatherApi.currentWeather;
     this.currentTemp = currentTemp; // 현재시간에 대한 현재온도
@@ -108,7 +107,7 @@ export default {
     this.temporaryData[2].value = Math.round(currentFeelsLike) + "도"; // 현재시간에 대한 체감온도
 
     this.arrayTemps = this.$store.state.openWeatherApi.hourlyWeather;
-    console.log(this.arrayTemps);
+    // console.log(this.arrayTemps);
 
     // const API_KEY = "e7878598157a92ae89d1403b94d8653d";
     // let initialLat = 36.5683;

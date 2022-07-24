@@ -5,6 +5,10 @@ export default {
   namespaced: true,
   // state : 실제로 취급해야하는 데이터
   state: {
+    position: {
+      lat: 0,
+      lon: 0,
+    },
     cityName: "",
     currentWeather: {
       currentTemp: 0,
@@ -39,6 +43,14 @@ export default {
     SET_TIMELY_WEATHER(state, payload) {
       state.hourlyWeather = payload;
     },
+    SET_LATLON(state, payload) {
+      console.log(state.position.lat); // 초기값
+
+      state.position.lat = payload.Ma;
+      state.position.lon = payload.La;
+
+      console.log(state.position.lat); // 변경된 후
+    },
   },
   // 2. actions : 특정한 데이터를 직접적으로 수정하는 것이 허용되지 않는다.
   // 위 사항이 가장 주의해야 할 사항이고, 또한 비동기로 동작한다는 점도 유의해야 한다.
@@ -58,16 +70,18 @@ export default {
     // searchData2({ state, getters, commit }, payload) {},
     // 두 번째 매개변수 자리 (payload): 함수가 실행될 때, 인수로 들어온 특정한 데이터를 payload 자리에 받는다.
 
-    // OpenWeatherAPI 데이터 호출
-    async FETCH_API(context) {
+    // OPENWEATHER API 데이터 호출
+    async FETCH_OPENWEATHER_API(context) {
       // context : 매개변수 전달
-      const API_KEY = "e7878598157a92ae89d1403b94d8653d";
-      let initialLat = 36.5683;
-      let initialLon = 126.9778;
+      const API_KEY = "6e9435abd019fcfcc2748f9c457cc209";
+      // let initialLat = 36.5683;
+      // let initialLon = 126.9778;
+      let initialLat = context.state.position.lat ? context.state.position.lat : 36.5683;
+      let initialLon = context.state.position.lon ? context.state.position.lon : 126.9778;
 
       try {
         const res = await axios.get(`https://api.openweathermap.org/data/2.5/onecall?lat=${initialLat}&lon=${initialLon}&appid=${API_KEY}&units=metric`);
-        // console.log(res);
+        console.log(res);
         context.commit("SET_CITYNAME", res.data.timezone.split("/")[1]); // 도시이름 데이터
         context.commit("SET_CURRENT_WEATHER", res.data.current); // 조회하는 현재시간에 대한 날씨데이터
         context.commit("SET_TIMELY_WEATHER", res.data.hourly); // 시간대별 날씨데이터
