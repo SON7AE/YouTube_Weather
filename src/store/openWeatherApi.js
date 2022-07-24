@@ -20,7 +20,7 @@ export default {
       currentVisibility: 0,
     },
     hourlyWeather: [],
-    imagePath: [],
+    images: [],
   },
   // getters: 계산된 상태를 만들어내는 속성이다.
   // computed와 기능이 유사하다.
@@ -49,8 +49,7 @@ export default {
       state.hourlyWeather = payload;
     },
     SET_IMAGEPATH(state, payload) {
-      state.imagePath = payload;
-      console.log(state.imagePath);
+      state.images = payload;
     },
   },
   // 2. actions : 특정한 데이터를 직접적으로 수정하는 것이 허용되지 않는다.
@@ -74,13 +73,21 @@ export default {
     // OPENWEATHER API 데이터 호출
     async FETCH_OPENWEATHER_API(context) {
       // context : 매개변수 전달
-      const API_KEY = "cfee9ef18d13e21307be6c0ee9c6455e";
+      const API_KEY = "65c0b42cff7ecf92e9832ae7e8ee9669";
       let initialLat = context.state.position.lat;
       let initialLon = context.state.position.lon;
 
       try {
         const res = await axios.get(`https://api.openweathermap.org/data/2.5/onecall?lat=${initialLat}&lon=${initialLon}&appid=${API_KEY}&units=metric`);
         // context.commit("SET_CITYNAME", res.data.timezone.split("/")[1]); // 도시이름 데이터
+        const images = new Array();
+
+        for (let i = 0; i < 48; i++) {
+          const weatherIcon = res.data.hourly[i].weather[0].icon;
+          images[i] = `src/assets/${weatherIcon}.png`;
+        }
+
+        context.commit("SET_IMAGEPATH", images);
         context.commit("SET_CURRENT_WEATHER", res.data.current); // 조회하는 현재시간에 대한 날씨데이터
         context.commit("SET_TIMELY_WEATHER", res.data.hourly); // 시간대별 날씨데이터
       } catch (error) {

@@ -18,7 +18,7 @@
           <p>{{ currentTemp }}&deg;</p>
         </div>
         <div class="weatherIcon">
-          <img src="~/assets/01d.png" alt="MainLogo" />
+          <img :src="images[0]" alt="MainLogo" />
         </div>
         <div class="weatherData">
           <div v-for="temporary in temporaryData" :key="temporary.title" class="detailData">
@@ -36,7 +36,7 @@
       <div class="timelyWeatherBox">
         <div class="timelyWeather" v-for="(temp, index) in arrayTemps" :key="index">
           <div class="icon">
-            <img :src="imagePath[index]" alt="" />
+            <img :src="images[index]" alt="" />
           </div>
           <div class="data">
             <p class="time">{{ Unix_timestamp(temp.dt) }}</p>
@@ -107,6 +107,7 @@ export default {
     this.temporaryData[2].value = Math.round(currentFeelsLike) + "도"; // 현재시간에 대한 체감온도
 
     this.arrayTemps = this.$store.state.openWeatherApi.hourlyWeather;
+    this.images = this.$store.state.openWeatherApi.imagePath;
   },
   computed: {
     reCallApi() {
@@ -143,9 +144,9 @@ export default {
         },
       ];
     },
-    imagePath() {
+    images() {
       this.reCallApi;
-      return this.$store.state.openWeatherApi.imagePath;
+      return this.$store.state.openWeatherApi.images;
     },
   },
 

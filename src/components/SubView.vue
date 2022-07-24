@@ -75,7 +75,7 @@ export default {
     // OpenWeatherAPI 호출 함수
     const fetchOpenWeatherApi = async () => {
       // API 호출을 위한 필수 데이터
-      const API_KEY = "cfee9ef18d13e21307be6c0ee9c6455e"; // env
+      const API_KEY = "65c0b42cff7ecf92e9832ae7e8ee9669"; // env
       let initialLat = 36.5683;
       let initialLon = 126.9778;
 
