@@ -42,7 +42,7 @@
             <p class="time">{{ Unix_timestamp(temp.dt) }}</p>
             <p class="currentDegree">{{ Math.round(temp.temp) }}&deg;</p>
             <div>
-              <img src="~/assets/drop.png" alt="" />
+              <img src="~/assets/images/drop.png" alt="" />
               <p class="fall">{{ temp.humidity }}%</p>
             </div>
           </div>
@@ -61,9 +61,7 @@
 <script>
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
-
 dayjs.locale("ko"); // global로 한국어 locale 사용
-
 export default {
   data() {
     return {
@@ -95,39 +93,29 @@ export default {
   async created() {
     // 초기데이터 선언을 위한 코드 작성
     // https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude={part}&appid={API key}
-
     // Vuex Store의 Mutations를 실행할 때는 commit() 메서드를
     // Vuex Store의 Actions를 실행할 때는 dispatch() 메서드를 사용한다.
     await this.$store.dispatch("openWeatherApi/FETCH_OPENWEATHER_API");
-
     const { currentTemp, currentHumidity, currentWindSpeed, currentFeelsLike } = this.$store.state.openWeatherApi.currentWeather;
     this.currentTemp = currentTemp; // 현재시간에 대한 현재온도
     this.temporaryData[0].value = currentHumidity + "%"; // 현재시간에 대한 습도
     this.temporaryData[1].value = currentWindSpeed + "m/s"; // 현재시간에 대한 풍속
     this.temporaryData[2].value = Math.round(currentFeelsLike) + "도"; // 현재시간에 대한 체감온도
-
     this.arrayTemps = this.$store.state.openWeatherApi.hourlyWeather;
     this.images = this.$store.state.openWeatherApi.imagePath;
   },
   computed: {
-    reCallApi() {
-      return this.$store.dispatch("openWeatherApi/FETCH_OPENWEATHER_API");
-    },
     cityName() {
-      this.reCallApi;
       return this.$store.state.openWeatherApi.cityName;
     },
     currentTemp() {
-      this.reCallApi;
       const { currentTemp } = this.$store.state.openWeatherApi.currentWeather;
       return currentTemp;
     },
     arrayTemps() {
-      this.reCallApi;
       return this.$store.state.openWeatherApi.hourlyWeather;
     },
     temporaryData() {
-      this.reCallApi;
       const { currentHumidity, currentWindSpeed, currentFeelsLike } = this.$store.state.openWeatherApi.currentWeather;
       return [
         {
@@ -145,11 +133,9 @@ export default {
       ];
     },
     images() {
-      this.reCallApi;
       return this.$store.state.openWeatherApi.images;
     },
   },
-
   methods: {
     // 타임스탬프로 변환
     Unix_timestamp(dt) {
