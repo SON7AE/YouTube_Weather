@@ -39,7 +39,9 @@
             <img :src="images[index]" alt="" />
           </div>
           <div class="data">
-            <p class="time">{{ Unix_timestamp(temp.dt) }}</p>
+            <p class="time">
+              {{ Unix_timestamp(temp.dt) }}
+            </p>
             <p class="currentDegree">{{ Math.round(temp.temp) }}&deg;</p>
             <div>
               <img src="~/assets/images/drop.png" alt="" />
@@ -62,32 +64,12 @@
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
 dayjs.locale("ko"); // global로 한국어 locale 사용
+
 export default {
   data() {
     return {
-      // 마커를 선택했을 때, 레이아웃에 보여지는 도시 이름
-      // cityName: "",
       // 현재 시간을 나타내기 위한 Dayjs 플러그인 사용
       currentTime: dayjs().format("YYYY. MM. DD. ddd"),
-      // 현재 시간에 따른 현재 온도 데이터
-      // currentTemp: "",
-      // 상세 날씨 데이터를 받아주는 데이터 할당
-      // temporaryData: [
-      //   {
-      //     title: "습도",
-      //     value: "",
-      //   },
-      //   {
-      //     title: "풍속",
-      //     value: "",
-      //   },
-      //   {
-      //     title: "체감온도",
-      //     value: "",
-      //   },
-      // ],
-      // arrayTemps: [],
-      // arrayIcons: [],
     };
   },
   async created() {
@@ -105,9 +87,11 @@ export default {
     this.images = this.$store.state.openWeatherApi.imagePath;
   },
   computed: {
+    // 마커를 선택했을 때, 레이아웃에 보여지는 도시 이름
     cityName() {
       return this.$store.state.openWeatherApi.cityName;
     },
+    // 현재 시간에 따른 현재 온도 데이터
     currentTemp() {
       const { currentTemp } = this.$store.state.openWeatherApi.currentWeather;
       return currentTemp;
@@ -115,6 +99,7 @@ export default {
     arrayTemps() {
       return this.$store.state.openWeatherApi.hourlyWeather;
     },
+    // 상세 날씨 데이터를 받아주는 데이터 할당
     temporaryData() {
       const { currentHumidity, currentWindSpeed, currentFeelsLike } = this.$store.state.openWeatherApi.currentWeather;
       return [
@@ -132,6 +117,7 @@ export default {
         },
       ];
     },
+    // 시간별 날씨 데이터에 대한 아이콘 이미지
     images() {
       return this.$store.state.openWeatherApi.images;
     },
