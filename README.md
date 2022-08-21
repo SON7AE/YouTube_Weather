@@ -19,7 +19,7 @@
 | 13주차 | ☑️          | ☑️           | 날씨 api 데이터 바인딩하기    |
 | 14주차 | ☑️          | ☑️           | Composition API란 무엇인가?   |
 | 15주차 | ☑️          | ☑️           | Composition API 활용하기      |
-| 16주차 |             | ☑️           | Vuex란 무엇인가?              |
-| 17주차 |             | ☑️           | Vuex 활용하기                 |
+| 16주차 | ☑️          | ☑️           | Vuex란 무엇인가?              |
+| 17주차 | ☑️          | ☑️           | Vuex 활용하기                 |
 
 #### 유튜브 링크 : https://www.youtube.com/channel/UCzX62RyG9P1kZaF8YLF7jjA
