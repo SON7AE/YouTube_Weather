@@ -122,6 +122,7 @@ export default {
         subWeatherData.value = isProcessedData;
       } catch (error) {
         console.log(error);
+        alert("API가 제대로 호출되지 않았습니다.");
       }
     };
 
