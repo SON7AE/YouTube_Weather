@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 
 export default {
   // namespaced : 하나의 store에서 모듈화하여 사용될 수 있음을 명시적으로 나타내는 개념
@@ -6,10 +6,10 @@ export default {
   // state : 실제로 취급해야하는 데이터
   state: {
     position: {
-      lat: 36.5683,
+      lat: 37.5683,
       lon: 126.9778,
     },
-    cityName: "Seoul",
+    cityName: 'Seoul',
     currentWeather: {
       currentTemp: 0,
       currentHumidity: 0,
@@ -73,7 +73,7 @@ export default {
     // OPENWEATHER API 데이터 호출
     async FETCH_OPENWEATHER_API(context) {
       // context : 매개변수 전달
-      const API_KEY = "65c0b42cff7ecf92e9832ae7e8ee9669";
+      const API_KEY = 'e7878598157a92ae89d1403b94d8653d';
       let initialLat = context.state.position.lat;
       let initialLon = context.state.position.lon;
 
@@ -81,15 +81,14 @@ export default {
         const res = await axios.get(`https://api.openweathermap.org/data/2.5/onecall?lat=${initialLat}&lon=${initialLon}&appid=${API_KEY}&units=metric`);
         // context.commit("SET_CITYNAME", res.data.timezone.split("/")[1]); // 도시이름 데이터
         const images = new Array();
-
         for (let i = 0; i < 48; i++) {
           const weatherIcon = res.data.hourly[i].weather[0].icon;
           images[i] = `src/assets/images/${weatherIcon}.png`;
         }
 
-        context.commit("SET_IMAGEPATH", images);
-        context.commit("SET_CURRENT_WEATHER", res.data.current); // 조회하는 현재시간에 대한 날씨데이터
-        context.commit("SET_TIMELY_WEATHER", res.data.hourly); // 시간대별 날씨데이터
+        context.commit('SET_IMAGEPATH', images);
+        context.commit('SET_CURRENT_WEATHER', res.data.current); // 조회하는 현재시간에 대한 날씨데이터
+        context.commit('SET_TIMELY_WEATHER', res.data.hourly); // 시간대별 날씨데이터
       } catch (error) {
         console.log(error);
       }

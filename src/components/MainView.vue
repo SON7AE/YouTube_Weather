@@ -61,15 +61,15 @@
 </template>
 
 <script>
-import dayjs from "dayjs";
-import "dayjs/locale/ko";
-dayjs.locale("ko"); // global로 한국어 locale 사용
+import dayjs from 'dayjs';
+import 'dayjs/locale/ko';
+dayjs.locale('ko'); // global로 한국어 locale 사용
 
 export default {
   data() {
     return {
       // 현재 시간을 나타내기 위한 Dayjs 플러그인 사용
-      currentTime: dayjs().format("YYYY. MM. DD. ddd"),
+      currentTime: dayjs().format('YYYY. MM. DD. ddd'),
     };
   },
   async created() {
@@ -77,12 +77,12 @@ export default {
     // https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude={part}&appid={API key}
     // Vuex Store의 Mutations를 실행할 때는 commit() 메서드를
     // Vuex Store의 Actions를 실행할 때는 dispatch() 메서드를 사용한다.
-    await this.$store.dispatch("openWeatherApi/FETCH_OPENWEATHER_API");
+    await this.$store.dispatch('openWeatherApi/FETCH_OPENWEATHER_API');
     const { currentTemp, currentHumidity, currentWindSpeed, currentFeelsLike } = this.$store.state.openWeatherApi.currentWeather;
     this.currentTemp = currentTemp; // 현재시간에 대한 현재온도
-    this.temporaryData[0].value = currentHumidity + "%"; // 현재시간에 대한 습도
-    this.temporaryData[1].value = currentWindSpeed + "m/s"; // 현재시간에 대한 풍속
-    this.temporaryData[2].value = Math.round(currentFeelsLike) + "도"; // 현재시간에 대한 체감온도
+    this.temporaryData[0].value = currentHumidity + '%'; // 현재시간에 대한 습도
+    this.temporaryData[1].value = currentWindSpeed + 'm/s'; // 현재시간에 대한 풍속
+    this.temporaryData[2].value = Math.round(currentFeelsLike) + '도'; // 현재시간에 대한 체감온도
     this.arrayTemps = this.$store.state.openWeatherApi.hourlyWeather;
     this.images = this.$store.state.openWeatherApi.imagePath;
   },
@@ -104,16 +104,16 @@ export default {
       const { currentHumidity, currentWindSpeed, currentFeelsLike } = this.$store.state.openWeatherApi.currentWeather;
       return [
         {
-          title: "습도",
-          value: currentHumidity + "%",
+          title: '습도',
+          value: currentHumidity + '%',
         },
         {
-          title: "풍속",
-          value: currentWindSpeed + "m/s",
+          title: '풍속',
+          value: currentWindSpeed + 'm/s',
         },
         {
-          title: "체감온도",
-          value: Math.round(currentFeelsLike) + "도",
+          title: '체감온도',
+          value: Math.round(currentFeelsLike) + '도',
         },
       ];
     },
@@ -126,14 +126,14 @@ export default {
     // 타임스탬프로 변환
     Unix_timestamp(dt) {
       let date = new Date(dt * 1000);
-      let hour = date.getHours().toString().padStart(2, "0");
-      return hour + "시";
+      let hour = date.getHours().toString().padStart(2, '0');
+      return hour + '시';
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-@import "~/scss/main.scss";
-@import "~/scss/mainview.scss";
+@import '~/scss/main.scss';
+@import '~/scss/mainview.scss';
 </style>
