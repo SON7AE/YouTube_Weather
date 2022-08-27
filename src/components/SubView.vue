@@ -134,8 +134,8 @@ export default {
 
     watchEffect(async () => {
       await fetchOpenWeatherApi();
-      console.log(cityName.value);
     });
+
     onMounted(() => {
       fetchOpenWeatherApi();
     });
