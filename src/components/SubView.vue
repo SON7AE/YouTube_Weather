@@ -45,7 +45,7 @@
 
 <script>
 import Map from '~/components/Map.vue';
-import { computed, onMounted, ref, watch, watchEffect } from 'vue';
+import { computed, onMounted, ref, watchEffect } from 'vue';
 import { useStore } from 'vuex';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
