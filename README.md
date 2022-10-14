@@ -24,3 +24,6 @@
 | 18주차 | ☑️          | ☑️           | 카카오맵 마커 클릭이벤트 - 데이터 동적변경 |
 
 #### 유튜브 링크 : https://www.youtube.com/channel/UCzX62RyG9P1kZaF8YLF7jjA
+
+1. pages에서 api를 호출
+2. store값을 그대로 
